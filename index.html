@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Kassia's Timecard</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+
+    <div id="app">
+
+      <h2>
+        {{message}}
+      </h2>
+
+
+<!--if edit is false, the list is shown  -->
+        <ul v-show="!edit">
+          <li v-for="(item,index) in items">
+            {{item.date}} {{item.inTime}} to {{item.outTime}}
+            total {{calcTime(index)}}
+            <!-- {{item.total}} -->
+          </li>
+        </ul>
+
+
+<!-- if edit is true, the "edit view" is shown -->
+        <div id="edit" v-show="edit">
+          <div v-for="(item,index) in items">
+            <input v-model="item.date"><input v-model="item.inTime"><input v-model="item.outTime">
+            <button :id="index" v-on:click="deleteItem(index)" class="close"> X </button>
+          </div>
+        </div>
+
+
+<!-- for adding items to the list -->
+      <input v-model="newItem.date" placeholder="Date">
+      <input v-model="newItem.inTime" placeholder="Time In">
+      <input v-model="newItem.outTime" placeholder="Time Out">
+      <button v-on:click="addToEnd">Append new item</button>
+      <button v-on:click="addToBeginning">Prepend new item</button>
+
+      <label id="edit-list">
+        <input type="checkbox" v-model="edit">
+        edit list
+      </label>
+    </div>
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script>
+
+
+
+      var app = new Vue({
+        el: '#app',
+
+        data: {
+          message: 'Timecard in VueJS',
+          edit: false,
+//Sample/initial items for the list
+          items:[{date:"Dec 18",inTime:"17:29",outTime:"23:57",total: 0},{date:"Dec 19",inTime:"17:29",outTime:"23:57", total: 0}],
+          newItem: {}
+        },
+
+//these methods should be fairly self-explanatory :)
+// except for calcTime, which is insane
+        methods: {
+
+          addToEnd: function() {
+            if (this.newItem !== {}) {
+              console.log("Adding " + this.newItem.date + " to the end");
+              this.items.push(this.newItem);
+              this.newItem = {};//clear newItem after adding
+            } else {
+              console.log("You can't add an empty string to the list!");
+            }
+          },
+
+           addToBeginning: function() {
+             if (this.newItem !== {}) {
+               console.log("Adding " + this.newItem.date + " to the beginning");
+               this.items.unshift(this.newItem);
+               this.newItem = {};//clear newItem after adding
+             } else {
+               console.log("You can't add an empty string to the list!");
+             }
+           },
+
+           deleteItem: function(index) {
+             console.log("deleting # " + this.items[index]);
+             this.items.splice(index, 1);
+           },
+
+           calcTime: function (index) {
+
+             var inTime = this.items[index].inTime
+             var hoursIn = parseInt(inTime.slice(0,2),10);
+            //  takes time as a string in format ##:##
+            // then cuts off the hours and makes them an integer
+
+             var minsIn = parseInt(inTime.slice(3,5),10);
+            //  cuts off minutes and converts to integer
+             var minsInToDecimal = minsIn/60;
+             //divides by 60 to change minutes into hundredths of an hour
+             var inTimeDecimal = hoursIn + minsIn/100;
+             //puts the decimal in the right place for the partial hours
+             //and adds the hours the partial hours to give hours in decimal format
+             console.log(inTimeDecimal +" in time");
+
+             var outTime = this.items[index].outTime;
+             var hoursOut = parseInt(outTime.slice(0,2),10);
+             // same idea as var hoursIn above
+             if (hoursOut === 0) {hoursOut=24};//midnight appears as 0 but we need it to be 24 for the calculation
+             var minsOut = parseInt(outTime.slice(3,5),10);
+             //same idea as var minsIn from above
+             var minsOutToDecimal = minsOut/60;
+             var outTimeDecimal = hoursOut + minsOut/100;
+             // same idea as inTimeDecimal
+             console.log(outTimeDecimal+" out time");
+
+             var hoursWorked = outTimeDecimal - inTimeDecimal;
+             //hours worked equals out time minus in time
+             console.log(hoursWorked + " hours worked");
+
+             var hoursWorkedRounded4 = (Math.round(hoursWorked*4))/4;
+// Math.round goes to the nearest integer. My mathematical intuition told me that to round the nearest 1/4 i must multiply the hours by 4, round that, then divide by 4. I tested it and it works!! :) If you need to round to, say, the nearest hundredth you will encounter floating point weirdness, but for quarters its OK
+             return hoursWorkedRounded4;
+           }
+
+
+
+}//,
+
+//        computed: {
+//          calcTime: function (index) {
+//
+//            var inTime = app.items[index].inTime
+//            var hoursIn = parseInt(inTime.slice(0,2),10);
+//            var minsIn = parseInt(inTime.slice(3,5),10);
+//            var minsInToDecimal = minsIn/60;
+//            var inTimeDecimal = hoursIn + minsIn/100;
+//            console.log(inTimeDecimal +" in time");
+//
+//            var outTime = app.items[index].outTime;
+//            var hoursOut = parseInt(outTime.slice(0,2),10);
+//            var minsOut = parseInt(outTime.slice(3,5),10);
+//            var minsOutToDecimal = minsOut/60;
+//            var outTimeDecimal = hoursOut + minsOut/100;
+//            console.log(outTimeDecimal+" out time");
+//
+//            var hoursWorked = outTimeDecimal - inTimeDecimal;
+//            console.log(hoursWorked + " hours worked");
+// // Math.round goes to the nearest integer. My mathematical intuition told me that to round the nearest 1/4 i must multiply the hours by 4, round that, then divide by 4. I tested it and it works!! :)
+//            var hoursWorkedRounded4 = (Math.round(hoursWorked*4))/4;
+//            return hoursWorkedRounded4;
+//          }
+//
+//        }
+
+      })
+
+
+    </script>
+  </body>
+</html>

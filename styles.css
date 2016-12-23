@@ -1,0 +1,30 @@
+button {
+  display: block;
+}
+
+button.close {
+  display: inline-block;
+}
+
+div#edit {
+  padding-top: 25px;
+  padding-bottom: 25px;
+}
+
+ul {
+  padding-top: 15px;
+  padding-bottom: 15px;
+ }
+
+label#edit-list {
+  display:block;
+  width: 100px;
+  border-style: solid;
+  border-radius: 0.25em;
+  border-width: thin;
+  border-color: black;
+  margin-top:20px;
+}
+.edit input {
+  display:inline;
+}
