@@ -54,6 +54,17 @@
       var app = new Vue({
         el: '#app',
 
+        mounted: function(){
+          console.log("loaded!");
+          if (localStorage.backup) {
+            var restore = JSON.parse(localStorage.backup);
+            this.items = restore;
+            console.log("localStorage backup found and restored")
+          } else {
+            console.log("No localStorage backup found, using dummy data");
+          }
+
+        },
         data: {
           message: 'Timecard in VueJS',
           edit: false,
@@ -71,6 +82,11 @@
               console.log("Adding " + this.newItem.date + " to the end");
               this.items.push(this.newItem);
               this.newItem = {};//clear newItem after adding
+
+              this.backup();
+              //var backup = JSON.stringify(this.items);
+              //localStorage.backup = backup;//todo: make backup its own method
+
             } else {
               console.log("You can't add an empty string to the list!");
             }
@@ -81,6 +97,9 @@
                console.log("Adding " + this.newItem.date + " to the beginning");
                this.items.unshift(this.newItem);
                this.newItem = {};//clear newItem after adding
+
+               this.backup();
+
              } else {
                console.log("You can't add an empty string to the list!");
              }
@@ -89,6 +108,16 @@
            deleteItem: function(index) {
              console.log("deleting # " + this.items[index]);
              this.items.splice(index, 1);
+
+             //var backup = JSON.stringify(this.items);
+             //localStorage.backup = backup;//todo: make backup its own method
+             this.backup();
+           },
+
+           backup: function(){
+             var backup = JSON.stringify(this.items);
+             localStorage.backup = backup;
+             console.log("Items backed up to localStorage")
            },
 
            calcTime: function (index) {
@@ -103,8 +132,7 @@
              var minsInDecimal = minsIn/60;
              //divides by 60 to change minutes into hundredths of an hour
              var inTimeDecimal = hoursIn + minsInDecimal;
-             //puts the decimal in the right place for the partial hours
-             //and adds the hours the partial hours to give hours in decimal format
+             //adds the hours the partial hours to give hours in decimal format
              console.log(inTimeDecimal +" in time");
 
              var outTime = this.items[index].outTime;
