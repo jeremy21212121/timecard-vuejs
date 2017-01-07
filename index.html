@@ -100,9 +100,9 @@
 
              var minsIn = parseInt(inTime.slice(3,5),10);
             //  cuts off minutes and converts to integer
-             var minsInToDecimal = minsIn/60;
+             var minsInDecimal = minsIn/60;
              //divides by 60 to change minutes into hundredths of an hour
-             var inTimeDecimal = hoursIn + minsIn/100;
+             var inTimeDecimal = hoursIn + minsInDecimal;
              //puts the decimal in the right place for the partial hours
              //and adds the hours the partial hours to give hours in decimal format
              console.log(inTimeDecimal +" in time");
@@ -113,8 +113,8 @@
              if (hoursOut === 0) {hoursOut=24};//midnight appears as 0 but we need it to be 24 for the calculation
              var minsOut = parseInt(outTime.slice(3,5),10);
              //same idea as var minsIn from above
-             var minsOutToDecimal = minsOut/60;
-             var outTimeDecimal = hoursOut + minsOut/100;
+             var minsOutDecimal = minsOut/60;
+             var outTimeDecimal = hoursOut + minsOutDecimal;
              // same idea as inTimeDecimal
              console.log(outTimeDecimal+" out time");
 
@@ -129,35 +129,8 @@
 
 
 
-}//,
-
-//        computed: {
-//          calcTime: function (index) {
-//
-//            var inTime = app.items[index].inTime
-//            var hoursIn = parseInt(inTime.slice(0,2),10);
-//            var minsIn = parseInt(inTime.slice(3,5),10);
-//            var minsInToDecimal = minsIn/60;
-//            var inTimeDecimal = hoursIn + minsIn/100;
-//            console.log(inTimeDecimal +" in time");
-//
-//            var outTime = app.items[index].outTime;
-//            var hoursOut = parseInt(outTime.slice(0,2),10);
-//            var minsOut = parseInt(outTime.slice(3,5),10);
-//            var minsOutToDecimal = minsOut/60;
-//            var outTimeDecimal = hoursOut + minsOut/100;
-//            console.log(outTimeDecimal+" out time");
-//
-//            var hoursWorked = outTimeDecimal - inTimeDecimal;
-//            console.log(hoursWorked + " hours worked");
-// // Math.round goes to the nearest integer. My mathematical intuition told me that to round the nearest 1/4 i must multiply the hours by 4, round that, then divide by 4. I tested it and it works!! :)
-//            var hoursWorkedRounded4 = (Math.round(hoursWorked*4))/4;
-//            return hoursWorkedRounded4;
-//          }
-//
-//        }
-
-      })
+         }
+       })
 
 
     </script>
