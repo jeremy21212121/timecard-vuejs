@@ -12,4 +12,6 @@ I spent at least an hour trying to figure out a render error when I tried to dis
 Next I'm going to try to figure out how to use some sort of cookie or localStorage so the data entered will persist even if the tab is closed.
 
 ## Update
-localStorage API will do the trick. It stores things as strings though so I have to use JSON.parse/JSON.stringify to store and retrieve the data.
+localStorage works great for this purpose. I implemented an auto backup everytime the list is changed, and auto restore on load if localStorage.backup is found.
+
+Next I want to make something server side to store data and possibly support multiple users.
