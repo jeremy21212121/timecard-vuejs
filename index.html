@@ -158,9 +158,16 @@
              if
               ( this.newItem["date"] === undefined
                 |
+                this.newItem["date"] === ""
+                |
                this.newItem["inTime"] === undefined
                 |
-              this.newItem["outTime"] === undefined )
+                this.newItem["inTime"] === ""
+                |
+                this.newItem["outTime"] === undefined
+                |
+                this.newItem["outTime"] === ""
+             )
           {
             alert("You left a field blank, silly goose!");
             return false;
