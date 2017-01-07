@@ -78,7 +78,7 @@
         methods: {
 
           addToEnd: function() {
-            if (this.newItem !== {}) {
+            if (this.validateNewItem() === true) {
               console.log("Adding " + this.newItem.date + " to the end");
               this.items.push(this.newItem);
               this.newItem = {};//clear newItem after adding
@@ -87,13 +87,11 @@
               //var backup = JSON.stringify(this.items);
               //localStorage.backup = backup;//todo: make backup its own method
 
-            } else {
-              console.log("You can't add an empty string to the list!");
             }
           },
 
            addToBeginning: function() {
-             if (this.newItem !== {}) {
+             if (this.validateNewItem() === true) {
                console.log("Adding " + this.newItem.date + " to the beginning");
                this.items.unshift(this.newItem);
                this.newItem = {};//clear newItem after adding
@@ -153,6 +151,21 @@
              var hoursWorkedRounded4 = (Math.round(hoursWorked*4))/4;
 // Math.round goes to the nearest integer. My mathematical intuition told me that to round the nearest 1/4 i must multiply the hours by 4, round that, then divide by 4. I tested it and it works!! :) If you need to round to, say, the nearest hundredth you will encounter floating point weirdness, but for quarters its OK
              return hoursWorkedRounded4;
+           },
+
+           validateNewItem: function() {
+
+             if
+              ( this.newItem["date"] === undefined
+                |
+               this.newItem["inTime"] === undefined
+                |
+              this.newItem["outTime"] === undefined )
+          {
+            alert("You left a field blank, silly goose!");
+            return false;
+          } else { return true;}
+
            }
 
 
