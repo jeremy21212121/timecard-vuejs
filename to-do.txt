@@ -1,0 +1,6 @@
+incorporate authentication from vue-jwt-authentication:
+	prompt user to login first - easy
+	display timecard app after login - easy
+	figure out how to sync backup to nodejs backend - less easy
+
+style app so it looks nice-easy

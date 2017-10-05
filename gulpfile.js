@@ -13,5 +13,5 @@ gulp.task('browser-sync', function() {
         }
     });
 
-gulp.watch(["./*.html","./css/*.css","./js/**/*.js"]).on('change', browserSync.reload);
+gulp.watch(["*.html","*.css","./js/**/*.js"]).on('change', browserSync.reload);
 });

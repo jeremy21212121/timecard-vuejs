@@ -1,3 +1,19 @@
+body {
+  background-color: #B2B4FF;
+}
+div#app {
+  margin: 5% auto;
+  max-width: 500px;
+  font-family: 'Roboto', sans-serif;
+  padding: 10px;
+  background-color: lightGrey;
+  border-radius: 6px;
+}
+input {
+  display: block;
+  margin: 10px 0;
+
+}
 button {
   display: block;
 }
@@ -14,8 +30,14 @@ div#edit {
 ul {
   padding-top: 15px;
   padding-bottom: 15px;
+  list-style-type: none;
+  padding-left: 0;
  }
-
+li {
+  border: 1px solid black;
+  width: 300px;
+  padding: 2px;
+}
 label#edit-list {
   display:block;
   width: 100px;
@@ -25,6 +47,6 @@ label#edit-list {
   border-color: black;
   margin-top:20px;
 }
-.edit input {
+input[type="checkbox"], .edit div input {
   display:inline;
 }
